@@ -11,42 +11,47 @@
  */
 package javasamples;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class TestQuestion {
 
     public static void main(String[] args) {
-        String s1 = "ABOUT";
-        String s2 = "BOAT";
+        try {
+            BufferedReader inp = new BufferedReader(
+                    new InputStreamReader(System.in));
+            String s1 = inp.readLine();
+            String s2 = inp.readLine();
 
-        System.out.println(longestCommonSubsequence(s1, s2));
+            System.out.println(longestCommonSubsequence(s1, s2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    // generate common subsequences in both strings
-    private static List<String> commonSubsequences(String[] arr1, String[] arr2) {
-        List<String> commonSubsequences = new ArrayList<>();
-   
+    public static String longestCommonSubsequence(String s1, String s2) {
+        int s1Length = s1.length() - 1;
+        int s2Length = s2.length() - 1;
 
-        return commonSubsequences;
-    }
-    public static String longestCommonSubsequence(String a, String b) {
-        int alength = a.length() - 1;
-        int blength = b.length() - 1;
-
-        if (alength < 0 || blength < 0)
+        if (s1Length < 0 || s2Length < 0) {
             return "";
+        }
 
-        if (a.substring(alength).equals(b.substring(blength))) {
-            return longestCommonSubsequence(a.substring(0, alength), b.substring(0, blength))
-                    + a.substring(alength);
+        if (s1.substring(s1Length).equals(s2.substring(s2Length))) {
+            return longestCommonSubsequence(
+                    s1.substring(0, s1Length), s2.substring(0, s2Length))
+                    + s1.substring(s1Length);
         } else {
-            String first = longestCommonSubsequence(a, b.substring(0, blength));
-            String second = longestCommonSubsequence(a.substring(0, alength), b);
-            if (first.length() > second.length()) {
-                return first;
+            String firstCommonSubsequence = longestCommonSubsequence(
+                    s1, s2.substring(0, s2Length));
+            String secondCommonSubsequence = longestCommonSubsequence(
+                    s1.substring(0, s1Length), s2);
+            if (firstCommonSubsequence.length() 
+                    > secondCommonSubsequence.length()) {
+                return firstCommonSubsequence;
             } else {
-                return second;
+                return secondCommonSubsequence;
             }
         }
     }
