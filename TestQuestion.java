@@ -30,14 +30,28 @@ public class TestQuestion {
         }
     }
 
+    /**
+     * function to return the longest common subsequence of s1 and s2
+     *
+     * @param s1 First string
+     * @param s2 Second string
+     * @return longest common subsequence of s1 and s2
+     */
     public static String longestCommonSubsequence(String s1, String s2) {
         int s1Length = s1.length() - 1;
         int s2Length = s2.length() - 1;
 
+        // check if input strings are empty
         if (s1Length < 0 || s2Length < 0) {
             return "";
         }
 
+        /*
+         * check if the two sequences both end in the same element.
+         * shorten each sequence by removing the last element
+         * find the LCS of the shortened sequences
+         * append the removed element to that LCS 
+         */
         if (s1.substring(s1Length).equals(s2.substring(s2Length))) {
             return longestCommonSubsequence(
                     s1.substring(0, s1Length), s2.substring(0, s2Length))
@@ -47,7 +61,7 @@ public class TestQuestion {
                     s1, s2.substring(0, s2Length));
             String secondCommonSubsequence = longestCommonSubsequence(
                     s1.substring(0, s1Length), s2);
-            if (firstCommonSubsequence.length() 
+            if (firstCommonSubsequence.length()
                     > secondCommonSubsequence.length()) {
                 return firstCommonSubsequence;
             } else {
